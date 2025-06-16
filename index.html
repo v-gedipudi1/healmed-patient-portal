@@ -639,24 +639,34 @@
         };
 
         // Authentication functions
-        function login() {
-            const email = document.getElementById('loginEmail').value;
-            const password = document.getElementById('loginPassword').value;
+        <script>
+  function login() {
+    const email = document.getElementById("loginEmail").value;
+    const password = document.getElementById("loginPassword").value;
 
-            if (!email || !password) {
-                alert('Please enter both email and password');
-                return;
-            }
+    const patientData = {
+      email: email,
+      password: password
+    };
 
-            const user = users.find(u => u.email === email && u.password === password);
-            if (user) {
-                currentUser = user;
-                isAdmin = false;
-                showPatientDashboard();
-            } else {
-                alert('Invalid credentials');
-            }
-        }
+    fetch("https://your-glitch-app-name.glitch.me/submit", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(patientData)
+    })
+    .then(res => res.json())
+    .then(response => {
+      alert("Login data submitted!");
+      // optionally move to next screen here
+    })
+    .catch(error => {
+      console.error("Submission error:", error);
+      alert("There was an issue submitting your info.");
+    });
+  }
+
 
         function adminLogin() {
             const username = document.getElementById('adminUsername').value;
